@@ -1,3 +1,23 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import oscP5.*; 
+import netP5.*; 
+import themidibus.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class SID_OSC_Receive extends PApplet {
+
 /**
  * A Example Scetch for recieving OSC message and converting them to MIDI events.
  * For the SID course HS 2015.
@@ -7,10 +27,10 @@
  */
 
 // The OSC Library
-import oscP5.*;
-import netP5.*;
+
+
 // The Midi Library
-import themidibus.*;
+
 
 MidiBus myBus;   // Create a Midi Bus Object.
 
@@ -19,10 +39,10 @@ OscP5 oscP5;     // Create a OSC Object.
 
 float oldAccX = 0;
 
-void setup() {
+public void setup() {
   
   // Basic Processing Setup
-  size(400,400);
+  
   frameRate(25);
   
   // OSC Setup
@@ -173,12 +193,12 @@ public void buttons(int _left, int _right, int _reedRelay) {
 }
 
 
-void draw() {
+public void draw() {
   background(0);
 }
 
 /* incoming osc message are forwarded to the oscEvent method. */
-void oscEvent(OscMessage theOscMessage) {
+public void oscEvent(OscMessage theOscMessage) {
   /* with theOscMessage.isPlugged() you check if the osc message has already been
    * forwarded to a plugged method. if theOscMessage.isPlugged()==true, it has already 
    * been forwared to another method in your sketch. theOscMessage.isPlugged() can 
@@ -195,4 +215,14 @@ void oscEvent(OscMessage theOscMessage) {
 // Clamp values between min and max
 public static float clamp(float val, float min, float max) {
     return Math.max(min, Math.min(max, val));
+}
+  public void settings() {  size(400,400); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "SID_OSC_Receive" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
